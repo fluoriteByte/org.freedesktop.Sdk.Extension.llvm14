@@ -1,11 +1,10 @@
 id: org.freedesktop.Sdk.Extension.llvm14
-branch: '24.08'
+branch: '24.08-fbyte-modded'
 runtime: org.freedesktop.Sdk
 build-extension: true
 sdk: org.freedesktop.Sdk
 runtime-version: '24.08'
 separate-locales: false
-appstream-compose: false
 build-options:
   prefix: /usr/lib/sdk/llvm14
   cflags: '-g0'
@@ -15,6 +14,7 @@ modules:
     config-opts:
       - '--without-alllang'
       - '--with-python3'
+      - '--without-pcre'
     cleanup:
       - '*'
     sources:
@@ -40,7 +40,7 @@ modules:
         LDFLAGS: ''
     config-opts:
       - '-DCMAKE_BUILD_TYPE=Release'
-      - '-DLLVM_ENABLE_PROJECTS=''clang;lld;core;tools'''
+      - '-DLLVM_ENABLE_PROJECTS=''clang;lld'''
       - '-DLLVM_TARGETS_TO_BUILD=''Native'''
       - '-DLLVM_LIBDIR_SUFFIX='''''
       - '-DLLVM_INCLUDE_TESTS:BOOL=OFF'
@@ -80,6 +80,8 @@ modules:
         CXX: clang++
       ldflags: '-Wl,--disable-new-dtags'
     config-opts:
+      - '-DCMAKE_C_COMPILER_LAUNCHER=ccache' 
+      - '-DCMAKE_CXX_COMPILER_LAUNCHER=ccache'
       - '-DCMAKE_BUILD_TYPE=RelWithDebInfo'
       - '-DCMAKE_C_FLAGS_RELWITHDEBINFO=''-DNDEBUG'''
       - '-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=''-DNDEBUG'''
@@ -127,9 +129,6 @@ modules:
       - >-
         install -Dm0644 -t ${FLATPAK_DEST}/share/metainfo/
         ${FLATPAK_ID}.metainfo.xml
-      - >-
-        appstream-compose --basename=${FLATPAK_ID} --prefix=${FLATPAK_DEST}
-        --origin=flatpak ${FLATPAK_ID}
     sources:
       - type: file
         path: org.freedesktop.Sdk.Extension.llvm14.metainfo.xml
