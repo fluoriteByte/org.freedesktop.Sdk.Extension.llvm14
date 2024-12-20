@@ -1,9 +1,9 @@
 id: org.freedesktop.Sdk.Extension.llvm14
-branch: '21.08'
+branch: '24.08'
 runtime: org.freedesktop.Sdk
 build-extension: true
 sdk: org.freedesktop.Sdk
-runtime-version: '21.08'
+runtime-version: '24.08'
 separate-locales: false
 appstream-compose: false
 build-options:
@@ -40,7 +40,7 @@ modules:
         LDFLAGS: ''
     config-opts:
       - '-DCMAKE_BUILD_TYPE=Release'
-      - '-DLLVM_ENABLE_PROJECTS=''clang;lld'''
+      - '-DLLVM_ENABLE_PROJECTS=''clang;lld;core;tools'''
       - '-DLLVM_TARGETS_TO_BUILD=''Native'''
       - '-DLLVM_LIBDIR_SUFFIX='''''
       - '-DLLVM_INCLUDE_TESTS:BOOL=OFF'
